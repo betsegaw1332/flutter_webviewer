@@ -41,7 +41,7 @@ class BookmarkedUrlWidget extends StatelessWidget {
                   webPageBloc.add(RemoveWebPage(webpage: webPageModel));
                 },
                 child: Text(
-                  'Remove',
+                AppStrings.removeButton,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 11.sp,

@@ -3,6 +3,7 @@ import 'package:flutter_webviewer/service_locator.dart';
 import 'package:flutter_webviewer/src/data/export.dart';
 import 'package:flutter_webviewer/src/domain/export.dart';
 import 'package:flutter_webviewer/src/presentation/blocs/web-page-bloc/export.dart';
+import 'package:flutter_webviewer/src/utils/export.dart';
 
 class WebPageBloc extends Bloc<WebPageEvent, WebPageState> {
   final DatabaseRepository _databaseRepository;
@@ -16,7 +17,8 @@ class WebPageBloc extends Bloc<WebPageEvent, WebPageState> {
     on<RemoveWebPage>(_removeWebPage);
   }
   List<WebPageModel> savedWebPagesCache = [];
-  String currentLoadedPageUrl = 'https://google.com';
+  String currentLoadedPageUrl = AppStrings.placeholderUrl;
+
   Future<void> _fetchStoredWebPages(FetchStoredWebPages fetchStoredWebPages,
       Emitter<WebPageState> emit) async {
     emit(WebPageInProgress());
@@ -24,7 +26,11 @@ class WebPageBloc extends Bloc<WebPageEvent, WebPageState> {
     try {
       final storedWebPages = await _databaseRepository.getSavedWebPages();
       savedWebPagesCache = storedWebPages;
-      currentLoadedPageUrl = storedWebPages.last.sourceUrl!;
+      if (storedWebPages.isNotEmpty) {
+        currentLoadedPageUrl = storedWebPages.last.sourceUrl!;
+      } else {
+        currentLoadedPageUrl = AppStrings.placeholderUrl;
+      }
       emit(WebPagesLoadedFromLocal(webPages: storedWebPages));
     } catch (e) {
       emit(WebPageFailed(errorMessage: e.toString()));
@@ -54,7 +60,6 @@ class WebPageBloc extends Bloc<WebPageEvent, WebPageState> {
 
   Future<void> _removeWebPage(
       RemoveWebPage removeWebPage, Emitter<WebPageState> emit) async {
-
     emit(WebPageInProgress());
     await _databaseRepository.removeWebPage(removeWebPage.webpage);
 

@@ -42,7 +42,7 @@ class _SettingsBodyState extends State<SettingsBody> {
             style: const TextStyle(color: Colors.black),
             validator: HelperFunctions.validateTextField,
             decoration: InputDecoration(
-                hintText: 'Insert the link here',
+                hintText: AppStrings.insertLink,
                 suffixIcon: state is WebPageInProgress
                     ? SizedBox(
                         height: 10.h,
@@ -77,21 +77,29 @@ class _SettingsBodyState extends State<SettingsBody> {
           Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Browsing histories',
+                AppStrings.browsingHistory,
                 style: TextStyle(color: Colors.black, fontSize: 16.sp),
               )),
           SizedBox(
             height: 10.h,
           ),
-          Expanded(
-              child: SingleChildScrollView(
-            child: Column(
-              children: List.generate(
-                  webPagBloc.savedWebPagesCache.length,
-                  (index) => BookmarkedUrlWidget(
-                      webPageModel: webPagBloc.savedWebPagesCache[index])),
-            ),
-          ))
+          webPagBloc.savedWebPagesCache.isEmpty
+              ? Expanded(
+                child: Center(
+                    child: Text(AppStrings.noHistory,
+                        style: TextStyle(color: AppColors.appPrimaryColor, fontSize: 15.sp)),
+                  ),
+              )
+              : Expanded(
+                  child: SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(
+                        webPagBloc.savedWebPagesCache.length,
+                        (index) => BookmarkedUrlWidget(
+                            webPageModel:
+                                webPagBloc.savedWebPagesCache[index])),
+                  ),
+                ))
         ],
       );
     }));

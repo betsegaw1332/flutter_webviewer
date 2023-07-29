@@ -9,4 +9,9 @@ abstract class AppStrings {
   static const String settingsPageTitle='Settings';
   static const String webPagesTableName='webpages';
   static const String databaseName = 'app_database.db';
+  static const String placeholderUrl= 'https://google.com';
+  static const String noHistory='No current history!';
+  static const String browsingHistory='Browsing History';
+  static const String insertLink='Insert the link here';
+  static const String removeButton ='Remove';
 }
