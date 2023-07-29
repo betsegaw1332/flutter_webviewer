@@ -12,6 +12,8 @@ class WebPageInProgress extends WebPageState {}
 
 class WebPageSaved extends WebPageState{}
 
+class WebPageLoaded extends WebPageState{}
+
 class WebPageFailed extends WebPageState {
   final String errorMessage;
   WebPageFailed({required this.errorMessage});
@@ -23,7 +25,7 @@ class WebPageFailed extends WebPageState {
 class WebPagesLoadedFromLocal extends WebPageState {
   final List<WebPageModel> webPages;
   WebPagesLoadedFromLocal({required this.webPages});
-  
+
   @override
   List<Object?> get props => [webPages];
 }

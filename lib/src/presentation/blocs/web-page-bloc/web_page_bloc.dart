@@ -12,15 +12,19 @@ class WebPageBloc extends Bloc<WebPageEvent, WebPageState> {
         super(WebPageInit()) {
     on<FetchStoredWebPages>(_fetchStoredWebPages);
     on<SaveWebPage>(_saveWebPage);
+    on<LoadAPage>(_loadAPage);
+    on<RemoveWebPage>(_removeWebPage);
   }
-
+  List<WebPageModel> savedWebPagesCache = [];
+  String currentLoadedPageUrl = 'https://google.com';
   Future<void> _fetchStoredWebPages(FetchStoredWebPages fetchStoredWebPages,
       Emitter<WebPageState> emit) async {
     emit(WebPageInProgress());
 
     try {
       final storedWebPages = await _databaseRepository.getSavedWebPages();
-
+      savedWebPagesCache = storedWebPages;
+      currentLoadedPageUrl = storedWebPages.last.sourceUrl!;
       emit(WebPagesLoadedFromLocal(webPages: storedWebPages));
     } catch (e) {
       emit(WebPageFailed(errorMessage: e.toString()));
@@ -34,9 +38,26 @@ class WebPageBloc extends Bloc<WebPageEvent, WebPageState> {
     try {
       await _databaseRepository.saveWebPage(saveWebPage.webPage);
 
-      emit(WebPageSaved());
+      emit(WebPageInProgress());
+      add(FetchStoredWebPages());
     } catch (e) {
       emit(WebPageFailed(errorMessage: e.toString()));
     }
+  }
+
+  Future<void> _loadAPage(
+      LoadAPage loadAPage, Emitter<WebPageState> emit) async {
+    emit(WebPageInProgress());
+    currentLoadedPageUrl = loadAPage.webpage.sourceUrl!;
+    emit(WebPageLoaded());
+  }
+
+  Future<void> _removeWebPage(
+      RemoveWebPage removeWebPage, Emitter<WebPageState> emit) async {
+
+    emit(WebPageInProgress());
+    await _databaseRepository.removeWebPage(removeWebPage.webpage);
+
+    add(FetchStoredWebPages());
   }
 }

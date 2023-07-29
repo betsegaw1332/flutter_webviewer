@@ -14,6 +14,23 @@ class SaveWebPage extends WebPageEvent {
   SaveWebPage({required this.webPage});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [webPage];
+}
+
+class LoadAPage extends WebPageEvent {
+  final WebPageModel webpage;
+
+  LoadAPage({required this.webpage});
+
+  @override
+  List<Object?> get props => [webpage];
+}
+
+class RemoveWebPage extends WebPageEvent {
+  final WebPageModel webpage;
+
+  RemoveWebPage({required this.webpage});
+
+  @override
+  List<Object?> get props => [webpage];
 }
