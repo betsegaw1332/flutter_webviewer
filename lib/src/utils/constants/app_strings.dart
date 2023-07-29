@@ -4,4 +4,7 @@ abstract class AppStrings {
   static const String appBackgroundColor = '#f7f8ff';
   static const String appShadowColor = '#F6F7FF';
   static const String textFieldFillColor = '#E4E5EB';
+
+  static const String homePageTitle='Web Viewer';
+  static const String settingsPageTitle='Settings';
 }
