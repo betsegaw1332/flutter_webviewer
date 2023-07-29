@@ -7,4 +7,6 @@ abstract class AppStrings {
 
   static const String homePageTitle='Web Viewer';
   static const String settingsPageTitle='Settings';
+  static const String webPagesTableName='webpages';
+  static const String databaseName = 'app_database.db';
 }

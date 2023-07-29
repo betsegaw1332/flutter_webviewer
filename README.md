@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # flutter_webviewer
 
 A new Flutter project.
@@ -15,6 +14,4 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-=======
 # flutter_webviewer
->>>>>>> 740649ebb00ecda67d00fd1ba5f5a690b35a9533
